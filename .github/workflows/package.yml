@@ -1,0 +1,63 @@
+name: Packaging
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  package:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            generator: TGZ
+            cmake_extra_args: ""
+            cpack_extra_args: ""
+#          - os: ubuntu-18.04
+#            generator: TGZ
+#            cmake_extra_args: ""
+#            cpack_extra_args: ""
+#          - os: macos-10.15
+#            generator: TGZ
+#            cmake_extra_args: ""
+#            cpack_extra_args: ""
+#          - os: windows-2019
+#            generator: ZIP
+#            cmake_extra_args: --config Release
+#            cpack_extra_args: -C Release
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Build Directory
+        run: cmake -E make_directory ./cmake-build/
+
+      - name: Configure CMake
+        working-directory: ./cmake-build
+        shell: bash
+        run: cmake -DCMAKE_BUILD_TYPE=Release ../
+
+      - name: Build Project
+        working-directory: ./cmake-build
+        shell: bash
+        run: cmake --build . -j 2 ${{ matrix.cmake_extra_args }}
+
+      - name: Packaging
+        working-directory: ./cmake-build
+        shell: bash
+        run: cpack -G ${{ matrix.generator }} ${{ matrix.cpack_extra_args }}
+
+      - name: Upload Package
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: cmake-build/FakeEPlusWithLAPACK-*
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true
