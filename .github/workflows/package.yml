@@ -22,10 +22,10 @@ jobs:
             generator: TGZ
             cmake_extra_args: ""
             cpack_extra_args: ""
-    #          - os: windows-2019
-    #            generator: ZIP
-    #            cmake_extra_args: --config Release
-    #            cpack_extra_args: -C Release
+          - os: windows-2019
+            generator: ZIP
+            cmake_extra_args: --config Release
+            cpack_extra_args: -C Release
 
     runs-on: ${{ matrix.os }}
 
