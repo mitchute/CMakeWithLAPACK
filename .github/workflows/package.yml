@@ -18,10 +18,10 @@ jobs:
             generator: TGZ
             cmake_extra_args: ""
             cpack_extra_args: ""
-    #          - os: macos-10.15
-    #            generator: TGZ
-    #            cmake_extra_args: ""
-    #            cpack_extra_args: ""
+          - os: macos-10.15
+            generator: TGZ
+            cmake_extra_args: ""
+            cpack_extra_args: ""
     #          - os: windows-2019
     #            generator: ZIP
     #            cmake_extra_args: --config Release
