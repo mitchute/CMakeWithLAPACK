@@ -14,10 +14,10 @@ jobs:
             generator: TGZ
             cmake_extra_args: ""
             cpack_extra_args: ""
-    #          - os: ubuntu-18.04
-    #            generator: TGZ
-    #            cmake_extra_args: ""
-    #            cpack_extra_args: ""
+          - os: ubuntu-18.04
+            generator: TGZ
+            cmake_extra_args: ""
+            cpack_extra_args: ""
     #          - os: macos-10.15
     #            generator: TGZ
     #            cmake_extra_args: ""
@@ -54,6 +54,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: FakeEPlusWithLAPACK
-          #          repo_token: ${{ secrets.GITHUB_TOKEN }}
           path: cmake-build/FakeEPlusWithLAPACK-*
 
